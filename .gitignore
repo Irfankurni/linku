@@ -1,0 +1,21 @@
+# ── Dependencies ──────────────────────────────────────────
+node_modules/
+
+# ── Build outputs ─────────────────────────────────────────
+dist/
+.angular/
+.wrangler/
+
+# ── Environment / Secrets ─────────────────────────────────
+.env
+.env.*
+.dev.vars
+
+# ── OS / Editor ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+
+# ── Tooling ───────────────────────────────────────────────
+.agents/
+skills-lock.json

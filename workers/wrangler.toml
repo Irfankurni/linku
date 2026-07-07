@@ -1,0 +1,28 @@
+name = "web-bio-workers"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "web-bio-db"
+database_id = "YOUR_D1_DATABASE_ID"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "YOUR_KV_NAMESPACE_ID"
+
+[vars]
+ENVIRONMENT = "development"
+JWT_ACCESS_SECRET = "CHANGE_ME_IN_PRODUCTION"
+JWT_REFRESH_SECRET = "CHANGE_ME_REFRESH_IN_PRODUCTION"
+CLOUDFLARE_ACCOUNT_ID = "YOUR_CF_ACCOUNT_ID"
+CLOUDFLARE_IMAGES_TOKEN = "YOUR_CF_IMAGES_TOKEN"
+FRONTEND_URL = "http://localhost:4200"
+ACCESS_TOKEN_EXPIRES_IN = "900"
+REFRESH_TOKEN_EXPIRES_IN = "2592000"
+
+[env.production]
+[env.production.vars]
+ENVIRONMENT = "production"
+FRONTEND_URL = "https://yourdomain.com"
