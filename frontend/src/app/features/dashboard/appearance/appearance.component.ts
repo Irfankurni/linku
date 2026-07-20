@@ -27,21 +27,37 @@ const THEMES = [
 
       <!-- Theme picker -->
       <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-4">
-        <h2 class="text-base font-semibold text-white">{{ 'DASHBOARD.APPEARANCE.THEME_SECTION' | translate }}</h2>
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-semibold text-white">{{ 'DASHBOARD.APPEARANCE.THEME_SECTION' | translate }}</h2>
+          @if (isFreePlan()) {
+            <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-1 rounded">PRO</span>
+          }
+        </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
           @for (theme of themes; track theme.id) {
             <button
-              (click)="selectedTheme.set(theme.id)"
-              class="rounded-xl overflow-hidden border-2 transition-all"
+              (click)="!isFreePlan() && selectedTheme.set(theme.id)"
+              [disabled]="isFreePlan()"
+              class="rounded-xl overflow-hidden border-2 transition-all relative"
               [class]="selectedTheme() === theme.id ? 'border-violet-500 scale-105' : 'border-transparent hover:border-white/20'"
+              [class.opacity-50]="isFreePlan()"
+              [class.cursor-not-allowed]="isFreePlan()"
             >
               <div class="h-20 bg-gradient-to-br {{ theme.preview }}"></div>
               <div class="bg-white/5 px-3 py-2 text-left">
                 <p class="text-xs font-medium text-white">{{ 'DASHBOARD.APPEARANCE.THEMES.' + theme.name.toUpperCase() | translate }}</p>
               </div>
+              @if (isFreePlan() && theme.id !== 'default') {
+                <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <span class="text-xl">🔒</span>
+                </div>
+              }
             </button>
           }
         </div>
+        @if (isFreePlan()) {
+          <p class="text-xs text-slate-400">Upgrade ke Pro untuk membuka kustomisasi tema.</p>
+        }
       </div>
 
       <!-- Profile info -->
@@ -59,6 +75,17 @@ const THEMES = [
             <textarea formControlName="bio" rows="3"
               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
                      focus:outline-none focus:ring-2 focus:ring-violet-500 transition resize-none"></textarea>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs text-slate-400">Custom Background URL</label>
+              @if (isFreePlan()) {
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">PRO</span>
+              }
+            </div>
+            <input formControlName="background_url" type="url" placeholder="https://example.com/image.jpg"
+              class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
+                     focus:outline-none focus:ring-2 focus:ring-violet-500 transition disabled:opacity-50" />
           </div>
           <div class="flex justify-end">
             <app-btn type="submit" size="sm" [loading]="saving()">{{ 'DASHBOARD.APPEARANCE.BTN_SAVE' | translate }}</app-btn>
@@ -80,18 +107,37 @@ export class AppearanceComponent implements OnInit {
   form = this.fb.group({
     display_name: [''],
     bio:          [''],
+    background_url: [{ value: '', disabled: false }],
   });
+
+  isFreePlan() {
+    return this.userService.profile()?.plan === 'free';
+  }
 
   ngOnInit() {
     const profile = this.userService.profile();
     if (profile) {
-      this.form.patchValue({ display_name: profile.display_name, bio: profile.bio ?? '' });
+      this.form.patchValue({
+        display_name: profile.display_name,
+        bio: profile.bio ?? '',
+        background_url: (profile.settings as any)?.background_url ?? ''
+      });
       this.selectedTheme.set(profile.theme ?? 'default');
+      if (this.isFreePlan()) {
+        this.form.get('background_url')?.disable();
+      }
     } else {
       this.userService.loadProfile().subscribe(res => {
         const p = res.data;
-        this.form.patchValue({ display_name: p.display_name, bio: p.bio ?? '' });
+        this.form.patchValue({
+          display_name: p.display_name,
+          bio: p.bio ?? '',
+          background_url: (p.settings as any)?.background_url ?? ''
+        });
         this.selectedTheme.set(p.theme ?? 'default');
+        if (this.isFreePlan()) {
+          this.form.get('background_url')?.disable();
+        }
       });
     }
   }
@@ -99,10 +145,16 @@ export class AppearanceComponent implements OnInit {
   onSave() {
     this.saving.set(true);
     const val = this.form.getRawValue();
+    const settings = {
+      ...this.userService.profile()?.settings,
+      background_url: val.background_url ? val.background_url : undefined
+    };
+
     this.userService.updateProfile({
       display_name: val.display_name ?? undefined,
       bio:          val.bio ?? undefined,
-      theme:        this.selectedTheme(),
+      theme:        this.isFreePlan() ? undefined : this.selectedTheme(),
+      settings:     settings,
     }).subscribe({
       next:  () => { this.toast.success('Tampilan diperbarui!'); this.saving.set(false); },
       error: () => this.saving.set(false),

@@ -62,24 +62,6 @@ export const reorderSchema = z.object({
   ordered_ids: z.array(z.string()).min(1),
 });
 
-// ── Products ───────────────────────────────────────────────────────────────
-
-export const createProductSchema = z.object({
-  title:       z.string().min(1).max(150),
-  description: z.string().max(2000).optional(),
-  price:       z.number().int().min(0).optional().nullable(),
-  currency:    z.string().length(3).default('IDR'),
-  images:      z.array(z.string().url()).max(5).default([]),
-  buy_url:     z.string().url().optional().nullable(),
-  category:    z.string().max(50).optional().nullable(),
-  slug:        z.string().min(1).max(80).regex(/^[a-z0-9-]+$/),
-  stock:       z.number().int().min(0).optional().nullable(),
-  is_featured: z.boolean().default(false),
-  meta:        z.record(z.unknown()).optional(),
-});
-
-export const updateProductSchema = createProductSchema.partial();
-
 // ── Analytics ──────────────────────────────────────────────────────────────
 
 export const analyticsQuerySchema = z.object({
@@ -87,9 +69,9 @@ export const analyticsQuerySchema = z.object({
 }).merge(paginationSchema.pick({ page: true, limit: true }));
 
 export const trackEventSchema = z.object({
-  entity_type: z.enum(['page', 'link', 'product']),
+  entity_type: z.enum(['page', 'link']),
   entity_id:   z.string().optional(),
-  event:       z.enum(['view', 'click', 'buy_click']),
+  event:       z.enum(['view', 'click']),
   referrer:    z.string().max(500).optional(),
 });
 
@@ -107,7 +89,6 @@ export type UpdateProfileInput   = z.infer<typeof updateProfileSchema>;
 export type CreateLinkInput      = z.infer<typeof createLinkSchema>;
 export type UpdateLinkInput      = z.infer<typeof updateLinkSchema>;
 export type ReorderInput         = z.infer<typeof reorderSchema>;
-export type CreateProductInput   = z.infer<typeof createProductSchema>;
-export type UpdateProductInput   = z.infer<typeof updateProductSchema>;
+
 export type TrackEventInput      = z.infer<typeof trackEventSchema>;
 export type AnalyticsQueryInput  = z.infer<typeof analyticsQuerySchema>;

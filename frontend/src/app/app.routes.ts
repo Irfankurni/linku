@@ -50,12 +50,7 @@ export const routes: Routes = [
           import('./features/dashboard/links/link-list.component').then(m => m.LinkListComponent),
         title: 'Kelola Link — Web Bio',
       },
-      {
-        path: 'products',
-        loadComponent: () =>
-          import('./features/dashboard/products/product-list.component').then(m => m.ProductListComponent),
-        title: 'Kelola Produk — Web Bio',
-      },
+
       {
         path: 'analytics',
         loadComponent: () =>
@@ -84,11 +79,7 @@ export const routes: Routes = [
       import('./features/public-profile/profile-page.component').then(m => m.ProfilePageComponent),
     // Title resolved dynamically in component
   },
-  {
-    path: ':username/p/:slug',
-    loadComponent: () =>
-      import('./features/public-profile/product-detail.component').then(m => m.ProductDetailComponent),
-  },
+
 
   // ── 404 ──────────────────────────────────────────────────────────────────
   {

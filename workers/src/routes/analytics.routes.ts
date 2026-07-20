@@ -5,7 +5,6 @@ import { PLAN_LIMITS } from '../lib/constants';
 import {
   getAnalyticsSummary,
   getAnalyticsByLinks,
-  getAnalyticsByProducts,
   getAnalyticsByGeo,
   getAnalyticsByDevice,
 } from '../lib/db';
@@ -31,11 +30,10 @@ analytics.get('/summary', async (c) => {
   const days   = parseDays(c as any, plan);
   const result = await getAnalyticsSummary(c.env.DB, userId, days);
 
-  const summary = { views: 0, clicks: 0, buy_clicks: 0 };
+  const summary = { views: 0, clicks: 0 };
   for (const row of result.results as any[]) {
     if (row.event === 'view')       summary.views      = row.count;
     if (row.event === 'click')      summary.clicks     = row.count;
-    if (row.event === 'buy_click')  summary.buy_clicks = row.count;
   }
 
   return c.json({ success: true, data: { summary, days, plan_max_days: PLAN_LIMITS[plan as keyof typeof PLAN_LIMITS]?.analytics_days ?? 7 } });
@@ -48,16 +46,6 @@ analytics.get('/links', async (c) => {
   const plan   = c.get('plan');
   const days   = parseDays(c as any, plan);
   const result = await getAnalyticsByLinks(c.env.DB, userId, days);
-  return c.json({ success: true, data: result.results, days });
-});
-
-// ── GET /api/analytics/products ───────────────────────────────────────────
-
-analytics.get('/products', async (c) => {
-  const userId = c.get('userId');
-  const plan   = c.get('plan');
-  const days   = parseDays(c as any, plan);
-  const result = await getAnalyticsByProducts(c.env.DB, userId, days);
   return c.json({ success: true, data: result.results, days });
 });
 

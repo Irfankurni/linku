@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { AnalyticsService } from '../../../core/services/analytics.service';
 import { UserService } from '../../../core/services/user.service';
 import { LinkService } from '../../../core/services/link.service';
-import { ProductService } from '../../../core/services/product.service';
+
 import { SkeletonComponent } from '../../../shared/components/skeleton/skeleton.component';
 import type { AnalyticsSummaryResponse } from '../../../core/models/analytics.model';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
@@ -57,10 +57,7 @@ import { environment } from '../../../../environments/environment';
             <p class="text-xs text-slate-400 uppercase tracking-wider">{{ 'DASHBOARD.OVERVIEW.TOTAL_CLICKS' | translate }}</p>
             <p class="text-3xl font-bold text-violet-400">{{ summary()?.summary?.clicks ?? 0 }}</p>
           </div>
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5 space-y-1">
-            <p class="text-xs text-slate-400 uppercase tracking-wider">{{ 'DASHBOARD.OVERVIEW.TOTAL_PRODUCT_CLICKS' | translate }}</p>
-            <p class="text-3xl font-bold text-emerald-400">{{ summary()?.summary?.buy_clicks ?? 0 }}</p>
-          </div>
+
         }
       </div>
 
@@ -76,16 +73,7 @@ import { environment } from '../../../../environments/environment';
           </div>
           <span class="ml-auto text-slate-600 group-hover:text-violet-400 transition-colors">→</span>
         </a>
-        <a routerLink="/dashboard/products"
-           class="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/40
-                  hover:bg-emerald-950/20 transition-all duration-200 group">
-          <div class="h-12 w-12 rounded-xl bg-emerald-900/50 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📦</div>
-          <div>
-            <p class="font-semibold text-white">{{ 'DASHBOARD.OVERVIEW.MANAGE_PRODUCTS' | translate }}</p>
-            <p class="text-xs text-slate-400">{{ 'DASHBOARD.OVERVIEW.ACTIVE_PRODUCTS' | translate:{'count': productService.products().length.toString()} }}</p>
-          </div>
-          <span class="ml-auto text-slate-600 group-hover:text-emerald-400 transition-colors">→</span>
-        </a>
+
       </div>
     </div>
   `,
@@ -94,7 +82,7 @@ export class OverviewComponent implements OnInit {
   protected readonly environment    = environment;
   protected readonly userService    = inject(UserService);
   protected readonly linkService    = inject(LinkService);
-  protected readonly productService = inject(ProductService);
+
   private readonly analyticsService = inject(AnalyticsService);
 
   loading = signal(true);
@@ -102,7 +90,7 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit() {
     this.linkService.loadLinks().subscribe();
-    this.productService.loadProducts().subscribe();
+
     this.analyticsService.getSummary(7).subscribe({
       next:     res => { this.summary.set(res.data); this.loading.set(false); },
       error:    ()  => this.loading.set(false),

@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import type { Env, HonoVariables } from '../env.d';
-import { getPublicProfile, getProductBySlug, insertAnalyticsEvent, detectDevice } from '../lib/db';
+import { getPublicProfile, insertAnalyticsEvent, detectDevice } from '../lib/db';
 import { trackEventSchema } from '../lib/validator';
 
 type AppEnv = { Bindings: Env; Variables: HonoVariables };
@@ -30,10 +30,6 @@ pub.get('/:username', async (c) => {
           settings: JSON.parse(user.settings ?? '{}'),
         },
         links:    profile.links,
-        products: profile.products.map((p: any) => ({
-          ...p,
-          images: JSON.parse(p.images ?? '[]'),
-        })),
       },
     }),
     {
@@ -46,39 +42,6 @@ pub.get('/:username', async (c) => {
   );
 });
 
-// ── GET /p/:username/products/:slug ─────────────────────────────────────────
-
-pub.get('/:username/products/:slug', async (c) => {
-  const username = c.req.param('username').toLowerCase();
-  const slug     = c.req.param('slug');
-
-  const user = await c.env.DB
-    .prepare('SELECT id FROM users WHERE username = ? AND is_active = 1')
-    .bind(username)
-    .first() as any;
-
-  if (!user) return c.json({ success: false, error: { message: 'Profil tidak ditemukan' } }, 404);
-
-  const product = await getProductBySlug(c.env.DB, user.id, slug) as any;
-  if (!product)  return c.json({ success: false, error: { message: 'Produk tidak ditemukan' } }, 404);
-
-  return new Response(
-    JSON.stringify({
-      success: true,
-      data: {
-        ...product,
-        images: JSON.parse(product.images ?? '[]'),
-        meta:   JSON.parse(product.meta ?? '{}'),
-      },
-    }),
-    {
-      headers: {
-        'Content-Type':  'application/json',
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=30',
-      },
-    }
-  );
-});
 
 // ── POST /p/:username/track ─────────────────────────────────────────────────
 // Fire-and-forget analytics tracking (no auth required)
@@ -118,38 +81,5 @@ pub.post('/:username/track', async (c) => {
   return c.json({ success: true });
 });
 
-// ── POST /p/:username/products/:slug/track ──────────────────────────────────
-
-pub.post('/:username/products/:slug/track', async (c) => {
-  const username = c.req.param('username').toLowerCase();
-  const slug     = c.req.param('slug');
-
-  const user = await c.env.DB
-    .prepare('SELECT id FROM users WHERE username = ? AND is_active = 1')
-    .bind(username)
-    .first() as any;
-
-  if (!user) return c.json({ success: true });
-
-  const product = await getProductBySlug(c.env.DB, user.id, slug) as any;
-  if (!product)  return c.json({ success: true });
-
-  const country   = c.req.header('CF-IPCountry') ?? undefined;
-  const userAgent = c.req.header('User-Agent')   ?? '';
-  const device    = detectDevice(userAgent);
-
-  c.executionCtx.waitUntil(
-    insertAnalyticsEvent(c.env.DB, {
-      user_id:     user.id,
-      entity_type: 'product',
-      entity_id:   product.id,
-      event:       'buy_click',
-      country,
-      device,
-    })
-  );
-
-  return c.json({ success: true });
-});
 
 export { pub as publicRoutes };
