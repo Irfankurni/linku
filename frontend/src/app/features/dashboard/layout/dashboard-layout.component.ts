@@ -68,6 +68,14 @@ const NAV_ITEMS = [
             <app-badge [plan]="profile.plan" />
           }
 
+          @if (userService.profile()?.plan === 'free') {
+            <a routerLink="/dashboard/upgrade"
+               class="mt-3 block w-full text-center px-3 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-pink-600 text-white
+                      hover:from-violet-500 hover:to-pink-500 font-bold text-sm shadow-lg shadow-violet-500/25 transition-all">
+              Upgrade ke Pro
+            </a>
+          }
+
           <div class="flex gap-2">
             <button
               (click)="toggleLanguage()"

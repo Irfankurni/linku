@@ -69,6 +69,12 @@ export const routes: Routes = [
           import('./features/dashboard/settings/settings.component').then(m => m.SettingsComponent),
         title: 'Pengaturan — Web Bio',
       },
+      {
+        path: 'upgrade',
+        loadComponent: () =>
+          import('./features/dashboard/upgrade/upgrade.component').then(m => m.UpgradeComponent),
+        title: 'Upgrade ke Pro — Web Bio',
+      },
     ],
   },
 
