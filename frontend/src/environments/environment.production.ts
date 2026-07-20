@@ -1,5 +1,5 @@
 export const environment = {
   production:  true,
-  apiUrl:      'https://api.yourdomain.com/api',
-  apiBaseUrl:  'https://api.yourdomain.com',
+  apiUrl:      'https://web-bio-workers.irfangokil23.workers.dev/api',
+  apiBaseUrl:  'https://web-bio-workers.irfangokil23.workers.dev',
 };

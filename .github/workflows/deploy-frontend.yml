@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Angular app (Cloudflare SSR)
         working-directory: frontend
-        run: npx ng build --configuration=cloudflare,production
+        run: npm run build:cloudflare
 
       - name: Deploy to Cloudflare Workers
         working-directory: frontend
