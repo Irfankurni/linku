@@ -23,7 +23,7 @@ export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
       if (!silent) {
         const body    = err.error as any;
         const message = body?.error?.message ?? ERROR_MESSAGES[err.status] ?? 'Terjadi kesalahan.';
-        if (err.status !== 401) toast.error(message);
+        if (err.status !== 401) toast.error(`${message} (${req.url})`);
       }
       return throwError(() => err);
     })

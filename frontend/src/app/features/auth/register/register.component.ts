@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { BtnComponent } from '../../../shared/components/btn/btn.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +39,7 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-4 py-2.5 text-white placeholder-slate-500
                          text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition" />
               </div>
-              <p class="text-xs text-slate-500">webbio.app/@{{ form.get('username')?.value || ('AUTH.REGISTER.USERNAME_PLACEHOLDER' | translate) }}</p>
+              <p class="text-xs text-slate-500">{{ environment.frontendUrl }}/@{{ form.get('username')?.value || ('AUTH.REGISTER.USERNAME_PLACEHOLDER' | translate) }}</p>
             </div>
 
             <div class="space-y-1.5">
@@ -75,7 +76,9 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
     </div>
   `,
 })
+
 export class RegisterComponent {
+  protected readonly environment = environment;
   protected readonly auth = inject(AuthService);
   private readonly fb     = inject(FormBuilder);
   private readonly router = inject(Router);

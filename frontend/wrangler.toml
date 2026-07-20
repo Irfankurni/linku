@@ -7,3 +7,7 @@ compatibility_flags = ["nodejs_compat_v2"]
 [assets]
 directory = "dist/frontend/browser"
 binding = "ASSETS"
+
+[[services]]
+binding = "BACKEND"
+service = "web-bio-workers"

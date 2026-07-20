@@ -7,6 +7,7 @@ import { ProductService } from '../../../core/services/product.service';
 import { SkeletonComponent } from '../../../shared/components/skeleton/skeleton.component';
 import type { AnalyticsSummaryResponse } from '../../../core/models/analytics.model';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-overview',
@@ -33,7 +34,7 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
           target="_blank"
           class="text-violet-400 hover:text-violet-300 text-sm font-medium truncate transition-colors"
         >
-          webbio.app/@{{ userService.profile()?.username ?? '...' }}
+          {{ environment.frontendUrl }}/@{{ userService.profile()?.username ?? '...' }}
         </a>
         <span class="ml-auto text-xs bg-emerald-900/40 text-emerald-400 border border-emerald-800/40 px-2 py-0.5 rounded-full">{{ 'DASHBOARD.OVERVIEW.LIVE' | translate }}</span>
       </div>
@@ -90,6 +91,7 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
   `,
 })
 export class OverviewComponent implements OnInit {
+  protected readonly environment    = environment;
   protected readonly userService    = inject(UserService);
   protected readonly linkService    = inject(LinkService);
   protected readonly productService = inject(ProductService);
