@@ -6,14 +6,11 @@ import { AnalyticsService } from '../../core/services/analytics.service';
 import { environment } from '../../../environments/environment';
 import type { User } from '../../core/models/user.model';
 import type { Link } from '../../core/models/link.model';
-import type { Product } from '../../core/models/product.model';
-import { DecimalPipe } from '@angular/common';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 
 interface PublicProfileData {
   user: User;
   links: Link[];
-  products: Product[];
 }
 
 const THEME_GRADIENTS: Record<string, string> = {
@@ -27,7 +24,7 @@ const THEME_GRADIENTS: Record<string, string> = {
 
 @Component({
   selector: 'app-profile-page',
-  imports: [RouterLink, DecimalPipe, TranslatePipe],
+  imports: [TranslatePipe],
   template: `
     @if (loading()) {
       <div class="min-h-screen bg-slate-900 flex items-center justify-center">
@@ -40,7 +37,9 @@ const THEME_GRADIENTS: Record<string, string> = {
         <p class="text-slate-400">{{ 'PROFILE.NOT_FOUND_DESC' | translate:{ username: username() } }}</p>
       </div>
     } @else if (profile()) {
-      <div class="min-h-screen bg-gradient-to-br {{ themeGradient() }} text-white">
+      <div class="min-h-screen text-white bg-cover bg-center bg-no-repeat bg-fixed"
+           [class]="!customBackground() ? 'bg-gradient-to-br ' + themeGradient() : ''"
+           [style.backgroundImage]="customBackground() ? 'url(' + customBackground() + ')' : 'none'">
         <div class="max-w-xl mx-auto px-4 py-12 space-y-8">
 
           <!-- Avatar & Bio -->
@@ -96,34 +95,6 @@ const THEME_GRADIENTS: Record<string, string> = {
             </div>
           }
 
-          <!-- Products -->
-          @if (profile()!.products.length > 0) {
-            <div class="space-y-4">
-              <h2 class="text-xs text-slate-500 uppercase tracking-widest text-center">{{ 'PROFILE.PRODUCTS_HEADER' | translate }}</h2>
-              <div class="grid grid-cols-2 gap-3">
-                @for (product of profile()!.products; track product.id) {
-                  <a
-                    [routerLink]="['/' + username() + '/p/' + product.slug]"
-                    (click)="trackProductView(product.id)"
-                    class="rounded-2xl bg-white/8 hover:bg-white/15 border border-white/10 hover:border-white/20
-                           overflow-hidden transition-all duration-200 hover:scale-[1.02]"
-                  >
-                    @if (product.images.length > 0) {
-                      <img [src]="product.images[0]" [alt]="product.title" class="w-full h-32 object-cover" />
-                    } @else {
-                      <div class="w-full h-32 bg-white/5 flex items-center justify-center text-3xl">📦</div>
-                    }
-                    <div class="p-3">
-                      <p class="text-sm font-semibold truncate">{{ product.title }}</p>
-                      @if (product.price !== null) {
-                        <p class="text-xs text-violet-400 mt-1">Rp {{ product.price | number }}</p>
-                      }
-                    </div>
-                  </a>
-                }
-              </div>
-            </div>
-          }
 
           <!-- Footer -->
           <div class="text-center pt-4">
@@ -153,6 +124,10 @@ export class ProfilePageComponent implements OnInit {
     return THEME_GRADIENTS[theme] ?? THEME_GRADIENTS['default'];
   }
 
+  customBackground() {
+    return (this.profile()?.user?.settings as any)?.background_url;
+  }
+
   ngOnInit() {
     const u = this.route.snapshot.paramMap.get('username') ?? '';
     this.username.set(u);
@@ -179,7 +154,4 @@ export class ProfilePageComponent implements OnInit {
     this.analyticsService.track(this.username(), { entity_type: 'link', entity_id: linkId, event: 'click' });
   }
 
-  trackProductView(productId: string) {
-    this.analyticsService.track(this.username(), { entity_type: 'product', entity_id: productId, event: 'view' });
-  }
 }

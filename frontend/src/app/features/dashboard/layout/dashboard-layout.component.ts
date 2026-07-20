@@ -9,7 +9,7 @@ import { TranslationService } from '../../../core/i18n/translation.service';
 const NAV_ITEMS = [
   { path: '/dashboard/overview', icon: '◈', labelKey: 'OVERVIEW' },
   { path: '/dashboard/links', icon: '⛓', labelKey: 'LINKS' },
-  { path: '/dashboard/products', icon: '📦', labelKey: 'PRODUCTS' },
+
   { path: '/dashboard/analytics', icon: '📊', labelKey: 'ANALYTICS' },
   { path: '/dashboard/appearance', icon: '🎨', labelKey: 'APPEARANCE' },
   { path: '/dashboard/settings', icon: '⚙', labelKey: 'SETTINGS' },

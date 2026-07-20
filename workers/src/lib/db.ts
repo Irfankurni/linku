@@ -172,115 +172,6 @@ export async function reorderLinks(db: D1Database, userId: string, orderedIds: s
   return db.batch(stmts);
 }
 
-// ── Product queries ────────────────────────────────────────────────────────
-
-export async function getProductsByUserId(db: D1Database, userId: string) {
-  return db
-    .prepare('SELECT * FROM products WHERE user_id = ? ORDER BY position ASC, created_at ASC')
-    .bind(userId)
-    .all();
-}
-
-export async function getProductById(db: D1Database, id: string, userId: string) {
-  return db
-    .prepare('SELECT * FROM products WHERE id = ? AND user_id = ?')
-    .bind(id, userId)
-    .first();
-}
-
-export async function getProductBySlug(db: D1Database, userId: string, slug: string) {
-  return db
-    .prepare('SELECT * FROM products WHERE user_id = ? AND slug = ? AND is_active = 1')
-    .bind(userId, slug)
-    .first();
-}
-
-export async function countProductsByUserId(db: D1Database, userId: string): Promise<number> {
-  const result = await db
-    .prepare('SELECT COUNT(*) as count FROM products WHERE user_id = ?')
-    .bind(userId)
-    .first<{ count: number }>();
-  return result?.count ?? 0;
-}
-
-export async function createProduct(
-  db: D1Database,
-  userId: string,
-  data: {
-    title: string;
-    description?: string;
-    price?: number | null;
-    currency: string;
-    images: string[];
-    buy_url?: string | null;
-    category?: string | null;
-    slug: string;
-    stock?: number | null;
-    is_featured: boolean;
-    meta?: Record<string, unknown>;
-  }
-) {
-  const id = ulid();
-  const ts = now();
-  const pos = await db
-    .prepare('SELECT COALESCE(MAX(position), -1) + 1 AS next_pos FROM products WHERE user_id = ?')
-    .bind(userId)
-    .first<{ next_pos: number }>();
-  const position = pos?.next_pos ?? 0;
-
-  await db
-    .prepare(
-      `INSERT INTO products (id, user_id, title, description, price, currency, images, buy_url, category, slug, stock, is_featured, meta, position, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    )
-    .bind(
-      id, userId,
-      data.title,
-      data.description ?? null,
-      data.price ?? null,
-      data.currency,
-      JSON.stringify(data.images),
-      data.buy_url ?? null,
-      data.category ?? null,
-      data.slug,
-      data.stock ?? null,
-      data.is_featured ? 1 : 0,
-      JSON.stringify(data.meta ?? {}),
-      position, ts, ts
-    )
-    .run();
-  return getProductById(db, id, userId);
-}
-
-export async function updateProduct(
-  db: D1Database,
-  id: string,
-  userId: string,
-  fields: Partial<Record<string, unknown>>
-) {
-  const entries = Object.entries(fields).filter(([, v]) => v !== undefined);
-  if (entries.length === 0) return;
-  const setClauses = entries.map(([k]) => `${k} = ?`).join(', ');
-  const values = entries.map(([, v]) => v);
-  await db
-    .prepare(`UPDATE products SET ${setClauses}, updated_at = ? WHERE id = ? AND user_id = ?`)
-    .bind(...values, now(), id, userId)
-    .run();
-}
-
-export async function deleteProduct(db: D1Database, id: string, userId: string) {
-  return db.prepare('DELETE FROM products WHERE id = ? AND user_id = ?').bind(id, userId).run();
-}
-
-export async function reorderProducts(db: D1Database, userId: string, orderedIds: string[]) {
-  const stmts = orderedIds.map((id, index) =>
-    db
-      .prepare('UPDATE products SET position = ?, updated_at = ? WHERE id = ? AND user_id = ?')
-      .bind(index, now(), id, userId)
-  );
-  return db.batch(stmts);
-}
-
 // ── Analytics queries ──────────────────────────────────────────────────────
 
 export async function insertAnalyticsEvent(
@@ -349,26 +240,6 @@ export async function getAnalyticsByLinks(db: D1Database, userId: string, days: 
        WHERE a.user_id = ? AND a.entity_type = 'link' AND a.event = 'click' AND a.created_at >= ?
        GROUP BY a.entity_id
        ORDER BY click_count DESC`
-    )
-    .bind(userId, since)
-    .all();
-}
-
-export async function getAnalyticsByProducts(db: D1Database, userId: string, days: number) {
-  const since = Date.now() - days * 86400 * 1000;
-  return db
-    .prepare(
-      `SELECT
-         a.entity_id,
-         p.title,
-         p.slug,
-         COUNT(*) as view_count,
-         SUM(CASE WHEN a.event = 'buy_click' THEN 1 ELSE 0 END) as buy_click_count
-       FROM analytics a
-       LEFT JOIN products p ON p.id = a.entity_id
-       WHERE a.user_id = ? AND a.entity_type = 'product' AND a.created_at >= ?
-       GROUP BY a.entity_id
-       ORDER BY view_count DESC`
     )
     .bind(userId, since)
     .all();
@@ -448,16 +319,13 @@ export async function getPublicProfile(db: D1Database, username: string) {
 
   if (!user) return null;
 
-  const [links, products] = await db.batch([
+  const [links] = await db.batch([
     db.prepare(
       'SELECT id, title, url, description, icon_url, type, is_featured, click_count FROM links WHERE user_id = ? AND is_active = 1 ORDER BY position ASC'
-    ).bind((user as any).id),
-    db.prepare(
-      'SELECT id, title, description, price, currency, images, buy_url, category, slug, stock, is_featured, view_count FROM products WHERE user_id = ? AND is_active = 1 ORDER BY position ASC'
-    ).bind((user as any).id),
+    ).bind((user as any).id)
   ]);
 
-  return { user, links: links?.results ?? [], products: products?.results ?? [] };
+  return { user, links: links?.results ?? [] };
 }
 
 // ── Utility ────────────────────────────────────────────────────────────────

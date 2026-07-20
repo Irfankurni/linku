@@ -10,7 +10,6 @@ export const serverRoutes: ServerRoute[] = [
 
   // Public profile — SSR at request time (dynamic, not prerendered)
   { path: ':username',             renderMode: RenderMode.Server },
-  { path: ':username/p/:slug',     renderMode: RenderMode.Server },
 
   // Everything else — client-side
   { path: '**', renderMode: RenderMode.Client },

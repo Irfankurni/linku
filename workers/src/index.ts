@@ -4,7 +4,6 @@ import type { Env, HonoVariables } from './env.d';
 import { authRoutes }      from './routes/auth.routes';
 import { usersRoutes }     from './routes/users.routes';
 import { linksRoutes }     from './routes/links.routes';
-import { productsRoutes }  from './routes/products.routes';
 import { analyticsRoutes } from './routes/analytics.routes';
 import { publicRoutes }    from './routes/public.routes';
 
@@ -33,7 +32,6 @@ app.get('/', (c) => c.json({ status: 'ok', version: '1.0.0', timestamp: Date.now
 app.route('/api/auth',      authRoutes);
 app.route('/api/users',     usersRoutes);
 app.route('/api/links',     linksRoutes);
-app.route('/api/products',  productsRoutes);
 app.route('/api/analytics', analyticsRoutes);
 
 // ── Public Routes (no auth, CF-cached) ────────────────────────────────────
