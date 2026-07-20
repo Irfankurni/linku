@@ -1,7 +1,7 @@
 name = "webbio-frontend"
 main = "dist/frontend/server/server.mjs"
-compatibility_date = "2025-01-01"
-compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat_v2"]
 
 # Static browser assets (JS, CSS, images) served via Workers Assets binding
 [assets]
