@@ -5,14 +5,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { BtnComponent } from '../../../shared/components/btn/btn.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
-const THEMES = [
-  { id: 'default',  name: 'Default',  preview: 'from-slate-900 to-slate-800' },
-  { id: 'violet',   name: 'Violet',   preview: 'from-violet-950 to-slate-900' },
-  { id: 'rose',     name: 'Rose',     preview: 'from-rose-950 to-slate-900'   },
-  { id: 'emerald',  name: 'Emerald',  preview: 'from-emerald-950 to-slate-900' },
-  { id: 'amber',    name: 'Amber',    preview: 'from-amber-950 to-slate-900'  },
-  { id: 'midnight', name: 'Midnight', preview: 'from-slate-950 to-black'      },
-];
+import { THEMES, type Theme } from '../../../core/constants/themes';
 
 @Component({
   selector: 'app-appearance',
@@ -36,18 +29,18 @@ const THEMES = [
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
           @for (theme of themes; track theme.id) {
             <button
-              (click)="!isFreePlan() && selectedTheme.set(theme.id)"
-              [disabled]="isFreePlan()"
+              (click)="(!isFreePlan() || !theme.isPro) && selectedTheme.set(theme.id)"
+              [disabled]="isFreePlan() && theme.isPro"
               class="rounded-xl overflow-hidden border-2 transition-all relative"
               [class]="selectedTheme() === theme.id ? 'border-violet-500 scale-105' : 'border-transparent hover:border-white/20'"
-              [class.opacity-50]="isFreePlan()"
-              [class.cursor-not-allowed]="isFreePlan()"
+              [class.opacity-50]="isFreePlan() && theme.isPro"
+              [class.cursor-not-allowed]="isFreePlan() && theme.isPro"
             >
               <div class="h-20 bg-gradient-to-br {{ theme.preview }}"></div>
               <div class="bg-white/5 px-3 py-2 text-left">
                 <p class="text-xs font-medium text-white">{{ 'DASHBOARD.APPEARANCE.THEMES.' + theme.name.toUpperCase() | translate }}</p>
               </div>
-              @if (isFreePlan() && theme.id !== 'default') {
+              @if (isFreePlan() && theme.isPro) {
                 <div class="absolute inset-0 flex items-center justify-center bg-black/40">
                   <span class="text-xl">🔒</span>
                 </div>
@@ -150,10 +143,13 @@ export class AppearanceComponent implements OnInit {
       background_url: val.background_url ? val.background_url : undefined
     };
 
+    const selected = this.themes.find(t => t.id === this.selectedTheme());
+    const isProTheme = selected?.isPro ?? false;
+
     this.userService.updateProfile({
       display_name: val.display_name ?? undefined,
       bio:          val.bio ?? undefined,
-      theme:        this.isFreePlan() ? undefined : this.selectedTheme(),
+      theme:        (this.isFreePlan() && isProTheme) ? undefined : this.selectedTheme(),
       settings:     settings,
     }).subscribe({
       next:  () => { this.toast.success('Tampilan diperbarui!'); this.saving.set(false); },

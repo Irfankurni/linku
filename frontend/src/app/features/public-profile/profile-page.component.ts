@@ -13,14 +13,7 @@ interface PublicProfileData {
   links: Link[];
 }
 
-const THEME_GRADIENTS: Record<string, string> = {
-  default: 'from-slate-900 via-slate-800 to-slate-900',
-  violet: 'from-violet-950 via-slate-900 to-slate-950',
-  rose: 'from-rose-950 via-slate-900 to-slate-950',
-  emerald: 'from-emerald-950 via-slate-900 to-slate-950',
-  amber: 'from-amber-950 via-slate-900 to-slate-950',
-  midnight: 'from-black via-slate-950 to-black',
-};
+import { THEMES } from '../../core/constants/themes';
 
 @Component({
   selector: 'app-profile-page',
@@ -120,8 +113,9 @@ export class ProfilePageComponent implements OnInit {
   username = signal('');
 
   themeGradient() {
-    const theme = this.profile()?.user?.theme ?? 'default';
-    return THEME_GRADIENTS[theme] ?? THEME_GRADIENTS['default'];
+    const themeId = this.profile()?.user?.theme ?? 'default';
+    const theme = THEMES.find(t => t.id === themeId);
+    return theme?.gradient ?? THEMES[0].gradient;
   }
 
   customBackground() {

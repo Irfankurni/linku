@@ -37,8 +37,9 @@ users.patch('/me', async (c) => {
   const { settings, ...rest } = parsed.data;
 
   if (plan === 'free') {
-    if (rest.theme && rest.theme !== 'default') {
-      return c.json({ success: false, error: { message: 'Fitur kustom tema hanya untuk pengguna Pro.', code: 'PLAN_REQUIRED' } }, 403);
+    const freeThemes = ['default', 'ocean', 'forest', 'sunset'];
+    if (rest.theme && !freeThemes.includes(rest.theme)) {
+      return c.json({ success: false, error: { message: 'Fitur kustom tema ini hanya untuk pengguna Pro.', code: 'PLAN_REQUIRED' } }, 403);
     }
     if (settings && (settings as any).background_url) {
       return c.json({ success: false, error: { message: 'Fitur background kustom hanya untuk pengguna Pro.', code: 'PLAN_REQUIRED' } }, 403);
