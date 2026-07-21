@@ -1,4 +1,4 @@
-name = "webbio-frontend"
+name = "linku-frontend"
 main = "dist/frontend/server/server.mjs"
 compatibility_date = "2025-09-01"
 compatibility_flags = ["nodejs_compat_v2"]
@@ -10,4 +10,4 @@ binding = "ASSETS"
 
 [[services]]
 binding = "BACKEND"
-service = "web-bio-workers"
+service = "linku-workers"

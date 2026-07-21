@@ -1,4 +1,4 @@
-# WebBio — Advanced Link-in-Bio Platform
+# Linku — Advanced Link-in-Bio Platform
 
 A full-stack platform for creating personal bio pages with links, customizable themes, and analytics — all in one place.
 
@@ -7,7 +7,7 @@ A full-stack platform for creating personal bio pages with links, customizable t
 This is a monorepo containing two separate applications:
 
 ```
-webbio/
+linku/
 ├── frontend/   # Angular 22 SSR app (UI)
 └── workers/    # Cloudflare Workers API (Backend + D1 + KV)
 ```
@@ -43,8 +43,8 @@ webbio/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/webbio.git
-cd webbio
+git clone https://github.com/YOUR_USERNAME/linku.git
+cd linku
 ```
 
 ### 2. Setup Workers (Backend)
@@ -81,7 +81,7 @@ The frontend will be available at `http://localhost:4200` and the Workers API at
 Before deploying, update `workers/wrangler.toml` with your actual values:
 
 | Variable | Description |
-|----------|-------------|
+|----------|--------------|
 | `database_id` | Your Cloudflare D1 database ID |
 | `RATE_LIMIT_KV` id | Your Cloudflare KV namespace ID |
 | `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID |

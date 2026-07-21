@@ -23,7 +23,7 @@ export default {
       const req = new Request(input, init);
 
       // Route backend API requests through Service Binding
-      if (req.url.startsWith('https://web-bio-workers.kuradev.workers.dev')) {
+      if (req.url.startsWith('https://linku-workers.kuradev.workers.dev')) {
         const backendReq = new Request(req);
         backendReq.headers.delete('host');
         backendReq.headers.delete('x-forwarded-host');
@@ -31,7 +31,7 @@ export default {
       }
 
       // Route frontend asset requests (like i18n JSON) through ASSETS binding
-      if (req.url.startsWith('https://webbio-frontend.kuradev.workers.dev')) {
+      if (req.url.startsWith('https://linku-frontend.kuradev.workers.dev')) {
         return env.ASSETS.fetch(req);
       }
 

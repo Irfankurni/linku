@@ -32,7 +32,7 @@
             "outputMode": "server",
             "security": {
               "allowedHosts": [
-                "webbio-frontend.kuradev.workers.dev",
+                "linku-frontend.kuradev.workers.dev",
                 "localhost",
                 "127.0.0.1"
               ]

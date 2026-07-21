@@ -1,4 +1,4 @@
-name = "web-bio-workers"
+name = "linku-workers"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
@@ -15,10 +15,10 @@ id = "5fcbfc2a8c3d4558831ff40882a0b069"
 [vars]
 ENVIRONMENT = "production"
 CLOUDFLARE_ACCOUNT_ID = "a71f7422acb32a3e3a78a227b2c362ff"
-FRONTEND_URL = "https://webbio-frontend.kuradev.workers.dev"
+FRONTEND_URL = "https://linku-frontend.kuradev.workers.dev"
 ACCESS_TOKEN_EXPIRES_IN = "900"
 REFRESH_TOKEN_EXPIRES_IN = "2592000"
 
 [[r2_buckets]]
 binding = "BUCKET"
-bucket_name = "webbio-uploads"
+bucket_name = "linku-uploads"

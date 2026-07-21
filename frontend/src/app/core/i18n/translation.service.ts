@@ -10,7 +10,7 @@ export class TranslationService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
 
-  private readonly STORAGE_KEY = 'web-bio-lang';
+  private readonly STORAGE_KEY = 'linku-lang';
 
   private _currentLang = signal<SupportedLanguage>('id');
   private _translations = signal<Record<string, string>>({});

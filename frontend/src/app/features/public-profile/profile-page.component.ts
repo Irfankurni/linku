@@ -32,7 +32,7 @@ import { THEMES } from '../../core/constants/themes';
     } @else if (profile()) {
       <div class="min-h-screen text-white bg-cover bg-center bg-no-repeat bg-fixed"
            [class]="!customBackground() ? 'bg-gradient-to-br ' + themeGradient() : ''"
-           [style.backgroundImage]="customBackground() ? 'url(' + customBackground() + ')' : 'none'">
+           [style.backgroundImage]="customBackground() ? 'url(' + customBackground() + ')' : null">
         <div class="max-w-xl mx-auto px-4 py-12 space-y-8">
 
           <!-- Avatar & Bio -->
