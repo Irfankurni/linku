@@ -4,13 +4,14 @@ import { UserService } from '../../../core/services/user.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { BtnComponent } from '../../../shared/components/btn/btn.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
+import { UpperCasePipe } from '@angular/common';
 
 import { THEMES, type Theme } from '../../../core/constants/themes';
 
 @Component({
   selector: 'app-appearance',
   standalone: true,
-  imports: [ReactiveFormsModule, BtnComponent, TranslatePipe],
+  imports: [ReactiveFormsModule, BtnComponent, TranslatePipe, UpperCasePipe],
   template: `
     <div class="max-w-2xl space-y-6">
       <div>
@@ -56,6 +57,30 @@ import { THEMES, type Theme } from '../../../core/constants/themes';
       <!-- Profile info -->
       <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-4">
         <h2 class="text-base font-semibold text-white">{{ 'DASHBOARD.APPEARANCE.PROFILE_SECTION' | translate }}</h2>
+        
+        <!-- Avatar Upload -->
+        <div class="flex items-center gap-4 pb-2">
+          <div class="relative w-16 h-16 rounded-full bg-white/10 flex items-center justify-center overflow-hidden border border-white/20">
+            @if (avatarUrl()) {
+              <img [src]="avatarUrl()" class="w-full h-full object-cover" />
+            } @else {
+              <span class="text-xl text-white font-semibold">{{ (form.value.display_name?.charAt(0) || 'U') | uppercase }}</span>
+            }
+            @if (avatarUploading()) {
+              <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <div class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+              </div>
+            }
+          </div>
+          <div>
+            <input type="file" #avatarInput class="hidden" accept="image/*" (change)="onAvatarUpload($event)" />
+            <button type="button" (click)="avatarInput.click()" [disabled]="avatarUploading()"
+              class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-medium rounded-lg transition disabled:opacity-50">
+              Change Avatar
+            </button>
+          </div>
+        </div>
+
         <form [formGroup]="form" (ngSubmit)="onSave()" class="space-y-3">
           <div class="space-y-1.5">
             <label class="text-xs text-slate-400">{{ 'DASHBOARD.APPEARANCE.DISPLAY_NAME' | translate }}</label>
@@ -76,9 +101,19 @@ import { THEMES, type Theme } from '../../../core/constants/themes';
                 <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">PRO</span>
               }
             </div>
-            <input formControlName="background_url" type="url" placeholder="https://example.com/image.jpg"
-              class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
-                     focus:outline-none focus:ring-2 focus:ring-violet-500 transition disabled:opacity-50" />
+            <div class="flex items-center gap-3">
+              <input formControlName="background_url" type="url" placeholder="https://example.com/image.jpg"
+                class="flex-1 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
+                       focus:outline-none focus:ring-2 focus:ring-violet-500 transition disabled:opacity-50" />
+              <input type="file" #bgInput class="hidden" accept="image/*" (change)="onBgUpload($event)" />
+              <button type="button" (click)="bgInput.click()" [disabled]="isFreePlan() || bgUploading()"
+                class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded-xl transition disabled:opacity-50 whitespace-nowrap flex items-center gap-2">
+                @if (bgUploading()) {
+                  <div class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                }
+                Upload
+              </button>
+            </div>
           </div>
           <div class="flex justify-end">
             <app-btn type="submit" size="sm" [loading]="saving()">{{ 'DASHBOARD.APPEARANCE.BTN_SAVE' | translate }}</app-btn>
@@ -96,6 +131,10 @@ export class AppearanceComponent implements OnInit {
   themes        = THEMES;
   selectedTheme = signal('default');
   saving        = signal(false);
+  
+  avatarUrl       = signal<string | null>(null);
+  avatarUploading = signal(false);
+  bgUploading     = signal(false);
 
   form = this.fb.group({
     display_name: [''],
@@ -116,6 +155,7 @@ export class AppearanceComponent implements OnInit {
         background_url: (profile.settings as any)?.background_url ?? ''
       });
       this.selectedTheme.set(profile.theme ?? 'default');
+      this.avatarUrl.set(profile.avatar_url ?? null);
       if (this.isFreePlan()) {
         this.form.get('background_url')?.disable();
       }
@@ -128,6 +168,7 @@ export class AppearanceComponent implements OnInit {
           background_url: (p.settings as any)?.background_url ?? ''
         });
         this.selectedTheme.set(p.theme ?? 'default');
+        this.avatarUrl.set(p.avatar_url ?? null);
         if (this.isFreePlan()) {
           this.form.get('background_url')?.disable();
         }
@@ -154,6 +195,43 @@ export class AppearanceComponent implements OnInit {
     }).subscribe({
       next:  () => { this.toast.success('Tampilan diperbarui!'); this.saving.set(false); },
       error: () => this.saving.set(false),
+    });
+  }
+
+  onAvatarUpload(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    this.avatarUploading.set(true);
+    this.userService.uploadImage(file).subscribe({
+      next: (res) => {
+        this.avatarUrl.set(res.data.url);
+        this.userService.updateProfile({ avatar_url: res.data.url }).subscribe();
+        this.avatarUploading.set(false);
+        this.toast.success('Avatar berhasil diperbarui!');
+      },
+      error: () => {
+        this.avatarUploading.set(false);
+        this.toast.error('Gagal mengupload avatar');
+      }
+    });
+  }
+
+  onBgUpload(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    this.bgUploading.set(true);
+    this.userService.uploadImage(file).subscribe({
+      next: (res) => {
+        this.form.patchValue({ background_url: res.data.url });
+        this.bgUploading.set(false);
+        this.toast.success('Image berhasil diupload! Klik Simpan Perubahan untuk mengaktifkan.');
+      },
+      error: () => {
+        this.bgUploading.set(false);
+        this.toast.error('Gagal mengupload image');
+      }
     });
   }
 }

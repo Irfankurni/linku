@@ -19,3 +19,5 @@ Thumbs.db
 # ── Tooling ───────────────────────────────────────────────
 .agents/
 skills-lock.json
+
+graphify-out/*

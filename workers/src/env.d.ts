@@ -6,6 +6,9 @@ export interface Env {
   // KV Namespaces
   RATE_LIMIT_KV: KVNamespace;
 
+  // R2 Buckets
+  BUCKET: R2Bucket;
+
   // Environment variables
   ENVIRONMENT: string;
   JWT_ACCESS_SECRET: string;

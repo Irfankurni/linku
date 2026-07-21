@@ -188,12 +188,12 @@ export async function insertAnalyticsEvent(
 ) {
   const id = ulid();
   const ts = now();
-  await db
-    .prepare(
+  
+  const stmts = [
+    db.prepare(
       `INSERT INTO analytics (id, user_id, entity_type, entity_id, event, referrer, country, device, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    )
-    .bind(
+    ).bind(
       id,
       data.user_id,
       data.entity_type,
@@ -204,7 +204,15 @@ export async function insertAnalyticsEvent(
       data.device ?? null,
       ts
     )
-    .run();
+  ];
+
+  if (data.entity_type === 'link' && data.event === 'click' && data.entity_id) {
+    stmts.push(
+      db.prepare(`UPDATE links SET click_count = click_count + 1 WHERE id = ?`).bind(data.entity_id)
+    );
+  }
+
+  await db.batch(stmts);
 }
 
 export async function getAnalyticsSummary(

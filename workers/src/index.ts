@@ -6,6 +6,7 @@ import { usersRoutes }     from './routes/users.routes';
 import { linksRoutes }     from './routes/links.routes';
 import { analyticsRoutes } from './routes/analytics.routes';
 import { publicRoutes }    from './routes/public.routes';
+import { uploadRoutes }    from './routes/upload.routes';
 
 const app = new Hono<{ Bindings: Env; Variables: HonoVariables }>();
 
@@ -33,6 +34,7 @@ app.route('/api/auth',      authRoutes);
 app.route('/api/users',     usersRoutes);
 app.route('/api/links',     linksRoutes);
 app.route('/api/analytics', analyticsRoutes);
+app.route('/api/upload',    uploadRoutes);
 
 // ── Public Routes (no auth, CF-cached) ────────────────────────────────────
 

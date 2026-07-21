@@ -48,6 +48,16 @@ export class UserService {
     );
   }
 
+  uploadImage(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<ApiResponse<{ url: string }>>(
+      `${environment.apiUrl}/upload`,
+      formData,
+      { withCredentials: true }
+    );
+  }
+
   clear() {
     this._profile.set(null);
     this._planInfo.set(null);

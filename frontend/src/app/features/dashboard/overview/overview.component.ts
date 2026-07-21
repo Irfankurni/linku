@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { AnalyticsService } from '../../../core/services/analytics.service';
 import { UserService } from '../../../core/services/user.service';
 import { LinkService } from '../../../core/services/link.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 import { SkeletonComponent } from '../../../shared/components/skeleton/skeleton.component';
 import type { AnalyticsSummaryResponse } from '../../../core/models/analytics.model';
@@ -34,8 +35,13 @@ import { environment } from '../../../../environments/environment';
           target="_blank"
           class="text-violet-400 hover:text-violet-300 text-sm font-medium truncate transition-colors"
         >
-          {{ environment.frontendUrl }}/@{{ userService.profile()?.username ?? '...' }}
+          {{ environment.frontendUrl }}/{{ userService.profile()?.username ?? '...' }}
         </a>
+        <button (click)="copyLink()" class="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="Copy to clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
         <span class="ml-auto text-xs bg-emerald-900/40 text-emerald-400 border border-emerald-800/40 px-2 py-0.5 rounded-full">{{ 'DASHBOARD.OVERVIEW.LIVE' | translate }}</span>
       </div>
 
@@ -79,9 +85,10 @@ import { environment } from '../../../../environments/environment';
   `,
 })
 export class OverviewComponent implements OnInit {
-  protected readonly environment    = environment;
-  protected readonly userService    = inject(UserService);
-  protected readonly linkService    = inject(LinkService);
+  protected readonly environment = environment;
+  protected readonly userService = inject(UserService);
+  protected readonly linkService = inject(LinkService);
+  private readonly toastService = inject(ToastService);
 
   private readonly analyticsService = inject(AnalyticsService);
 
@@ -92,8 +99,20 @@ export class OverviewComponent implements OnInit {
     this.linkService.loadLinks().subscribe();
 
     this.analyticsService.getSummary(7).subscribe({
-      next:     res => { this.summary.set(res.data); this.loading.set(false); },
-      error:    ()  => this.loading.set(false),
+      next: res => { this.summary.set(res.data); this.loading.set(false); },
+      error: () => this.loading.set(false),
     });
+  }
+
+  async copyLink() {
+    const username = this.userService.profile()?.username;
+    if (!username) return;
+    const url = `${this.environment.frontendUrl}/${username}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      this.toastService.success('Link disalin ke clipboard!');
+    } catch (err) {
+      this.toastService.error('Gagal menyalin link');
+    }
   }
 }
