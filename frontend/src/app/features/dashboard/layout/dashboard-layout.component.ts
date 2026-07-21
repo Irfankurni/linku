@@ -28,7 +28,7 @@ const NAV_ITEMS = [
         <!-- Brand -->
         <div class="px-6 py-5 border-b border-white/8">
           <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400">
-            WebBio
+            Linku
           </span>
         </div>
 
@@ -103,7 +103,7 @@ const NAV_ITEMS = [
       <main class="flex-1 lg:pl-64 min-h-screen">
         <!-- Mobile topbar -->
         <header class="lg:hidden flex items-center justify-between px-4 py-3 border-b border-white/8 bg-slate-900/80 backdrop-blur sticky top-0 z-10">
-          <span class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400">WebBio</span>
+          <span class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400">Linku</span>
           <!-- Mobile nav can be added here -->
         </header>
 

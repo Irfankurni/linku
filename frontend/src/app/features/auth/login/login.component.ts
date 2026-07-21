@@ -15,7 +15,7 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
         <!-- Logo -->
         <div class="text-center mb-8">
           <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400 mb-2">
-            WebBio
+            Linku
           </div>
           <p class="text-slate-400 text-sm">{{ 'AUTH.LOGIN.TITLE' | translate }}</p>
         </div>
@@ -78,13 +78,13 @@ import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 })
 export class LoginComponent {
   protected readonly auth = inject(AuthService);
-  private readonly fb     = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
   error = signal('');
 
   form = this.fb.group({
-    email:    ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 

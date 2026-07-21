@@ -13,7 +13,7 @@ import { UserService } from '../../../core/services/user.service';
       <div class="text-center space-y-3">
         <h1 class="text-3xl font-black text-white">Upgrade to Pro</h1>
         <p class="text-slate-400 max-w-lg mx-auto">
-          Tingkatkan profil WebBio kamu dengan fitur-fitur premium. Tampil lebih profesional dan dapatkan insight yang lebih dalam.
+          Tingkatkan profil Linku kamu dengan fitur-fitur premium. Tampil lebih profesional dan dapatkan insight yang lebih dalam.
         </p>
       </div>
 

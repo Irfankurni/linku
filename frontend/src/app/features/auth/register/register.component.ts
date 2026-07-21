@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
 
         <div class="text-center mb-8">
           <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-pink-400 mb-2">
-            WebBio
+            Linku
           </div>
           <p class="text-slate-400 text-sm">{{ 'AUTH.REGISTER.TITLE' | translate }}</p>
         </div>
@@ -80,17 +80,17 @@ import { environment } from '../../../../environments/environment';
 export class RegisterComponent {
   protected readonly environment = environment;
   protected readonly auth = inject(AuthService);
-  private readonly fb     = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
   error = signal('');
 
   form = this.fb.group({
     display_name: ['', [Validators.required, Validators.maxLength(80)]],
-    username:     ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32),
-                        Validators.pattern(/^[a-z0-9_-]+$/)]],
-    email:        ['', [Validators.required, Validators.email]],
-    password:     ['', [Validators.required, Validators.minLength(8)]],
+    username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32),
+    Validators.pattern(/^[a-z0-9_-]+$/)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
   onSubmit() {
@@ -99,9 +99,9 @@ export class RegisterComponent {
     const val = this.form.getRawValue();
     this.auth.register({
       display_name: val.display_name!,
-      username:     val.username!,
-      email:        val.email!,
-      password:     val.password!,
+      username: val.username!,
+      email: val.email!,
+      password: val.password!,
     }).subscribe({
       next: () => this.router.navigate(['/dashboard']),
       error: (err) => this.error.set(err.error?.error?.message ?? 'Pendaftaran gagal'),

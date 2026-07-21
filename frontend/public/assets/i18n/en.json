@@ -5,7 +5,6 @@
   "LANDING.HERO.CTA_PRIMARY": "Get Started — Free",
   "LANDING.HERO.CTA_SECONDARY": "Learn More",
   "LANDING.HERO.SUBTEXT": "No credit card required • 2-minute setup",
-  
   "LANDING.FEATURES.TITLE": "Everything you need",
   "LANDING.FEATURES.DESC": "We designed Web Bio with powerful features for creators, businesses, and professionals.",
   "LANDING.FEATURES.ITEM1.TITLE": "Link Management",
@@ -14,7 +13,6 @@
   "LANDING.FEATURES.ITEM2.DESC": "Choose from various beautiful themes or use a custom background image to showcase your unique style.",
   "LANDING.FEATURES.ITEM3.TITLE": "Deep Analytics",
   "LANDING.FEATURES.ITEM3.DESC": "Know how your links perform. Track visits, clicks, countries of origin, and devices used by your audience.",
-  
   "LANDING.HOW.TITLE": "How It Works",
   "LANDING.HOW.ITEM1.TITLE": "Create an Account",
   "LANDING.HOW.ITEM1.DESC": "Claim your unique username in just a few seconds.",
@@ -22,7 +20,6 @@
   "LANDING.HOW.ITEM2.DESC": "Add links and choose a theme that fits your brand.",
   "LANDING.HOW.ITEM3.TITLE": "Share with the World",
   "LANDING.HOW.ITEM3.DESC": "Put your Web Bio link in your Instagram, TikTok, or Twitter bio.",
-  
   "LANDING.PRICING.TITLE": "Affordable Pricing",
   "LANDING.PRICING.DESC": "Start for free, upgrade anytime as your needs grow.",
   "LANDING.PRICING.FREE.TITLE": "Free",
@@ -43,15 +40,12 @@
   "LANDING.PRICING.PRO.F3": "Advanced Analytics (90 Days)",
   "LANDING.PRICING.PRO.F4": "Geo & Device Analytics",
   "LANDING.PRICING.PRO.CTA": "Upgrade to Pro",
-  
   "LANDING.FOOTER.TERMS": "Terms & Conditions",
   "LANDING.FOOTER.PRIVACY": "Privacy Policy",
   "LANDING.FOOTER.HELP": "Help Center",
-
   "NAV.DASHBOARD": "Dashboard",
   "NAV.LOGIN": "Log In",
   "NAV.REGISTER": "Sign Up Free",
-  
   "AUTH.LOGIN.TITLE": "Log In to Your Account",
   "AUTH.LOGIN.EMAIL_LABEL": "Email",
   "AUTH.LOGIN.EMAIL_PLACEHOLDER": "you@example.com",
@@ -60,7 +54,6 @@
   "AUTH.LOGIN.BUTTON": "Log In",
   "AUTH.LOGIN.NO_ACCOUNT": "Don't have an account?",
   "AUTH.LOGIN.REGISTER_LINK": "Sign up now",
-  
   "AUTH.REGISTER.TITLE": "Create Web Bio Account",
   "AUTH.REGISTER.EMAIL_LABEL": "Email",
   "AUTH.REGISTER.EMAIL_PLACEHOLDER": "you@example.com",
@@ -74,7 +67,6 @@
   "AUTH.REGISTER.BUTTON": "Sign Up",
   "AUTH.REGISTER.HAS_ACCOUNT": "Already have an account?",
   "AUTH.REGISTER.LOGIN_LINK": "Log In",
-  
   "DASHBOARD.SIDEBAR.OVERVIEW": "Overview",
   "DASHBOARD.SIDEBAR.LINKS": "Links",
   "DASHBOARD.SIDEBAR.PRODUCTS": "Products",
@@ -84,7 +76,6 @@
   "DASHBOARD.SIDEBAR.LOGOUT": "Log Out",
   "DASHBOARD.SIDEBAR.VIEW_PAGE": "View Page",
   "DASHBOARD.SIDEBAR.MY_PAGE": "My Page",
-
   "DASHBOARD.OVERVIEW.TITLE": "Overview",
   "DASHBOARD.OVERVIEW.WELCOME": "Welcome, {{name}} 👋",
   "DASHBOARD.OVERVIEW.SUBTITLE": "Here is a summary of your page activity.",
@@ -99,7 +90,6 @@
   "DASHBOARD.OVERVIEW.ACTIVE_LINKS": "{{count}} active links",
   "DASHBOARD.OVERVIEW.MANAGE_PRODUCTS": "Manage Products",
   "DASHBOARD.OVERVIEW.ACTIVE_PRODUCTS": "{{count}} active products",
-
   "DASHBOARD.LINKS.TITLE": "Links",
   "DASHBOARD.LINKS.USAGE": "{{current}} / {{limit}} links used",
   "DASHBOARD.LINKS.ADD_BTN": "+ Add Link",
@@ -121,7 +111,6 @@
   "DASHBOARD.LINKS.ITEM.BTN_ACTIVE": "Active",
   "DASHBOARD.LINKS.ITEM.BTN_INACTIVE": "Inactive",
   "DASHBOARD.LINKS.ITEM.BTN_DELETE": "Delete",
-
   "DASHBOARD.PRODUCTS.TITLE": "Products",
   "DASHBOARD.PRODUCTS.USAGE": "{{current}} / {{limit}} products used",
   "DASHBOARD.PRODUCTS.ADD_BTN": "+ Add Product",
@@ -141,7 +130,6 @@
   "DASHBOARD.PRODUCTS.ITEM.CLICKS": "{{count}} clicks",
   "DASHBOARD.PRODUCTS.ITEM.BTN_EDIT": "Edit",
   "DASHBOARD.PRODUCTS.ITEM.BTN_DELETE": "Delete",
-
   "DASHBOARD.ANALYTICS.TITLE": "Analytics",
   "DASHBOARD.ANALYTICS.DAYS_7": "Last 7 days",
   "DASHBOARD.ANALYTICS.DAYS_30": "Last 30 days",
@@ -160,7 +148,6 @@
   "DASHBOARD.ANALYTICS.GEO_VIEWS": "{{count}} views",
   "DASHBOARD.ANALYTICS.DEVICE_TITLE": "By Device",
   "DASHBOARD.ANALYTICS.DEVICE_VIEWS": "{{count}} views",
-  
   "DASHBOARD.APPEARANCE.TITLE": "Appearance",
   "DASHBOARD.APPEARANCE.SUBTITLE": "Customize how your page looks to visitors.",
   "DASHBOARD.APPEARANCE.PROFILE_SECTION": "Profile Info",
@@ -177,7 +164,6 @@
   "DASHBOARD.APPEARANCE.THEMES.AMBER": "Amber",
   "DASHBOARD.APPEARANCE.THEMES.MIDNIGHT": "Midnight",
   "DASHBOARD.APPEARANCE.BTN_SAVE": "Save Changes",
-
   "DASHBOARD.SETTINGS.TITLE": "Settings",
   "DASHBOARD.SETTINGS.PROFILE": "Profile",
   "DASHBOARD.SETTINGS.DISPLAY_NAME": "Display Name",
@@ -200,16 +186,14 @@
   "DASHBOARD.SETTINGS.DELETE_ACCOUNT": "Delete Account",
   "DASHBOARD.SETTINGS.DELETE_DESC": "This action cannot be undone. All your data, links, and analytics will be permanently deleted.",
   "DASHBOARD.SETTINGS.DELETE_BTN": "Permanently Delete Account",
-
   "PROFILE.NOT_FOUND_TITLE": "Profile not found",
   "PROFILE.NOT_FOUND_DESC": "Page @{{username}} is not available.",
   "PROFILE.PRODUCTS_HEADER": "Products",
-  "PROFILE.POWERED_BY": "Create your own bio page — WebBio",
+  "PROFILE.POWERED_BY": "Create your own bio page — Linku",
   "PRODUCT.STOCK": "Stock:",
   "PRODUCT.BUY_NOW": "Buy Now →",
   "PRODUCT.BACK_TO_PROFILE": "← Back to @{{username}}'s profile",
   "PRODUCT.NOT_FOUND": "Product not found",
-
   "NOT_FOUND.TITLE": "Page Not Found",
   "NOT_FOUND.DESC": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
   "NOT_FOUND.BTN": "Back to Home"
