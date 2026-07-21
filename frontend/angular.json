@@ -32,7 +32,7 @@
             "outputMode": "server",
             "security": {
               "allowedHosts": [
-                "webbio-frontend.irfangokil23.workers.dev",
+                "webbio-frontend.kuradev.workers.dev",
                 "localhost",
                 "127.0.0.1"
               ]
@@ -73,7 +73,10 @@
               "define": {
                 "import.meta.url": "'file://'"
               },
-              "externalDependencies": ["express", "@angular/ssr/node"],
+              "externalDependencies": [
+                "express",
+                "@angular/ssr/node"
+              ],
               "ssr": {
                 "entry": "src/cloudflare.ts"
               }
