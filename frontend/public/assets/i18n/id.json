@@ -5,53 +5,47 @@
   "LANDING.HERO.CTA_PRIMARY": "Mulai Sekarang — Gratis",
   "LANDING.HERO.CTA_SECONDARY": "Pelajari Lebih Lanjut",
   "LANDING.HERO.SUBTEXT": "Tidak perlu kartu kredit • Setup hanya 2 menit",
-  
   "LANDING.FEATURES.TITLE": "Semua yang Anda butuhkan",
   "LANDING.FEATURES.DESC": "Kami merancang Web Bio dengan fitur-fitur kuat untuk kreator, bisnis, dan profesional.",
   "LANDING.FEATURES.ITEM1.TITLE": "Manajemen Link",
   "LANDING.FEATURES.ITEM1.DESC": "Kelola semua link penting Anda. Seret dan lepas untuk mengatur urutan, tambahkan ikon, dan soroti link utama.",
-  "LANDING.FEATURES.ITEM2.TITLE": "Etalase Produk",
-  "LANDING.FEATURES.ITEM2.DESC": "Jual produk atau tampilkan portofolio langsung di halaman Anda dengan gambar dan harga yang menarik.",
+  "LANDING.FEATURES.ITEM2.TITLE": "Kustomisasi Tampilan",
+  "LANDING.FEATURES.ITEM2.DESC": "Pilih dari berbagai tema menarik atau gunakan gambar background kustom untuk menampilkan gaya unik Anda.",
   "LANDING.FEATURES.ITEM3.TITLE": "Analitik Mendalam",
   "LANDING.FEATURES.ITEM3.DESC": "Ketahui performa link Anda. Lacak jumlah kunjungan, klik, asal negara, dan perangkat yang digunakan audiens.",
-  
   "LANDING.HOW.TITLE": "Cara Kerjanya",
   "LANDING.HOW.ITEM1.TITLE": "Buat Akun",
   "LANDING.HOW.ITEM1.DESC": "Klaim username unik Anda hanya dalam beberapa detik.",
   "LANDING.HOW.ITEM2.TITLE": "Sesuaikan Profil",
-  "LANDING.HOW.ITEM2.DESC": "Tambahkan link, produk, dan pilih tema yang sesuai dengan merek Anda.",
+  "LANDING.HOW.ITEM2.DESC": "Tambahkan link dan pilih tema yang sesuai dengan merek Anda.",
   "LANDING.HOW.ITEM3.TITLE": "Bagikan ke Dunia",
   "LANDING.HOW.ITEM3.DESC": "Pasang link Web Bio Anda di bio Instagram, TikTok, atau Twitter.",
-  
   "LANDING.PRICING.TITLE": "Harga yang Terjangkau",
   "LANDING.PRICING.DESC": "Mulai secara gratis, tingkatkan kapan saja sesuai kebutuhan Anda.",
   "LANDING.PRICING.FREE.TITLE": "Gratis",
   "LANDING.PRICING.FREE.DESC": "Cocok untuk pemula yang baru memulai.",
   "LANDING.PRICING.FREE.PRICE": "Rp 0",
   "LANDING.PRICING.FREE.MONTH": "/bulan",
-  "LANDING.PRICING.FREE.F1": "Hingga 10 Link",
+  "LANDING.PRICING.FREE.F1": "Link Tanpa Batas",
   "LANDING.PRICING.FREE.F2": "Analitik Dasar (7 Hari)",
-  "LANDING.PRICING.FREE.F3": "Tema Standar",
+  "LANDING.PRICING.FREE.F3": "4 Tema Gratis",
   "LANDING.PRICING.FREE.CTA": "Mulai Gratis",
   "LANDING.PRICING.PRO.BADGE": "PALING POPULER",
   "LANDING.PRICING.PRO.TITLE": "Pro",
   "LANDING.PRICING.PRO.DESC": "Untuk kreator dan bisnis yang ingin berkembang.",
-  "LANDING.PRICING.PRO.PRICE": "Rp 49.000",
+  "LANDING.PRICING.PRO.PRICE": "Rp 20.000",
   "LANDING.PRICING.PRO.MONTH": "/bulan",
-  "LANDING.PRICING.PRO.F1": "Link & Produk Tanpa Batas",
-  "LANDING.PRICING.PRO.F2": "Analitik Lanjutan (30 Hari)",
-  "LANDING.PRICING.PRO.F3": "Kustomisasi Domain & CSS",
+  "LANDING.PRICING.PRO.F1": "Custom Background Image",
+  "LANDING.PRICING.PRO.F2": "Semua Tema Premium",
+  "LANDING.PRICING.PRO.F3": "Analitik Lanjutan (90 Hari)",
   "LANDING.PRICING.PRO.F4": "Analitik Geografi & Perangkat",
   "LANDING.PRICING.PRO.CTA": "Tingkatkan ke Pro",
-  
   "LANDING.FOOTER.TERMS": "Syarat & Ketentuan",
   "LANDING.FOOTER.PRIVACY": "Kebijakan Privasi",
   "LANDING.FOOTER.HELP": "Bantuan",
-
   "NAV.DASHBOARD": "Dashboard",
   "NAV.LOGIN": "Masuk",
   "NAV.REGISTER": "Daftar Gratis",
-  
   "AUTH.LOGIN.TITLE": "Masuk ke Akun Anda",
   "AUTH.LOGIN.EMAIL_LABEL": "Email",
   "AUTH.LOGIN.EMAIL_PLACEHOLDER": "anda@example.com",
@@ -60,7 +54,6 @@
   "AUTH.LOGIN.BUTTON": "Masuk",
   "AUTH.LOGIN.NO_ACCOUNT": "Belum punya akun?",
   "AUTH.LOGIN.REGISTER_LINK": "Daftar sekarang",
-  
   "AUTH.REGISTER.TITLE": "Buat Akun Web Bio",
   "AUTH.REGISTER.EMAIL_LABEL": "Email",
   "AUTH.REGISTER.EMAIL_PLACEHOLDER": "anda@example.com",
@@ -74,7 +67,6 @@
   "AUTH.REGISTER.BUTTON": "Daftar",
   "AUTH.REGISTER.HAS_ACCOUNT": "Sudah punya akun?",
   "AUTH.REGISTER.LOGIN_LINK": "Masuk",
-  
   "DASHBOARD.SIDEBAR.OVERVIEW": "Ringkasan",
   "DASHBOARD.SIDEBAR.LINKS": "Link",
   "DASHBOARD.SIDEBAR.PRODUCTS": "Produk",
@@ -84,7 +76,6 @@
   "DASHBOARD.SIDEBAR.LOGOUT": "Keluar",
   "DASHBOARD.SIDEBAR.VIEW_PAGE": "Lihat Halaman",
   "DASHBOARD.SIDEBAR.MY_PAGE": "Halaman Saya",
-
   "DASHBOARD.OVERVIEW.TITLE": "Ringkasan",
   "DASHBOARD.OVERVIEW.WELCOME": "Selamat datang, {{name}} 👋",
   "DASHBOARD.OVERVIEW.SUBTITLE": "Berikut ringkasan aktivitas halaman Anda.",
@@ -99,7 +90,6 @@
   "DASHBOARD.OVERVIEW.ACTIVE_LINKS": "{{count}} link aktif",
   "DASHBOARD.OVERVIEW.MANAGE_PRODUCTS": "Kelola Produk",
   "DASHBOARD.OVERVIEW.ACTIVE_PRODUCTS": "{{count}} produk aktif",
-
   "DASHBOARD.LINKS.TITLE": "Link",
   "DASHBOARD.LINKS.USAGE": "{{current}} / {{limit}} link digunakan",
   "DASHBOARD.LINKS.ADD_BTN": "+ Tambah Link",
@@ -121,7 +111,6 @@
   "DASHBOARD.LINKS.ITEM.BTN_ACTIVE": "Aktif",
   "DASHBOARD.LINKS.ITEM.BTN_INACTIVE": "Nonaktif",
   "DASHBOARD.LINKS.ITEM.BTN_DELETE": "Hapus",
-
   "DASHBOARD.PRODUCTS.TITLE": "Produk",
   "DASHBOARD.PRODUCTS.USAGE": "{{current}} / {{limit}} produk digunakan",
   "DASHBOARD.PRODUCTS.ADD_BTN": "+ Tambah Produk",
@@ -141,7 +130,6 @@
   "DASHBOARD.PRODUCTS.ITEM.CLICKS": "{{count}} klik",
   "DASHBOARD.PRODUCTS.ITEM.BTN_EDIT": "Edit",
   "DASHBOARD.PRODUCTS.ITEM.BTN_DELETE": "Hapus",
-
   "DASHBOARD.ANALYTICS.TITLE": "Analitik",
   "DASHBOARD.ANALYTICS.DAYS_7": "7 hari terakhir",
   "DASHBOARD.ANALYTICS.DAYS_30": "30 hari terakhir",
@@ -160,7 +148,6 @@
   "DASHBOARD.ANALYTICS.GEO_VIEWS": "{{count}} tayangan",
   "DASHBOARD.ANALYTICS.DEVICE_TITLE": "Berdasarkan Perangkat",
   "DASHBOARD.ANALYTICS.DEVICE_VIEWS": "{{count}} tayangan",
-  
   "DASHBOARD.APPEARANCE.TITLE": "Tampilan",
   "DASHBOARD.APPEARANCE.SUBTITLE": "Sesuaikan bagaimana halaman Anda terlihat oleh pengunjung.",
   "DASHBOARD.APPEARANCE.PROFILE_SECTION": "Info Profil",
@@ -177,7 +164,6 @@
   "DASHBOARD.APPEARANCE.THEMES.AMBER": "Amber",
   "DASHBOARD.APPEARANCE.THEMES.MIDNIGHT": "Midnight",
   "DASHBOARD.APPEARANCE.BTN_SAVE": "Simpan Perubahan",
-
   "DASHBOARD.SETTINGS.TITLE": "Pengaturan",
   "DASHBOARD.SETTINGS.PROFILE": "Profil",
   "DASHBOARD.SETTINGS.DISPLAY_NAME": "Nama Tampilan",
@@ -200,7 +186,6 @@
   "DASHBOARD.SETTINGS.DELETE_ACCOUNT": "Hapus Akun",
   "DASHBOARD.SETTINGS.DELETE_DESC": "Tindakan ini tidak dapat dibatalkan. Semua data, link, dan analitik Anda akan dihapus permanen.",
   "DASHBOARD.SETTINGS.DELETE_BTN": "Hapus Akun Permanen",
-
   "PROFILE.NOT_FOUND_TITLE": "Profil tidak ditemukan",
   "PROFILE.NOT_FOUND_DESC": "Halaman @{{username}} tidak tersedia.",
   "PROFILE.PRODUCTS_HEADER": "Produk",
@@ -209,7 +194,6 @@
   "PRODUCT.BUY_NOW": "Beli Sekarang →",
   "PRODUCT.BACK_TO_PROFILE": "← Kembali ke profil @{{username}}",
   "PRODUCT.NOT_FOUND": "Produk tidak ditemukan",
-
   "NOT_FOUND.TITLE": "Halaman Tidak Ditemukan",
   "NOT_FOUND.DESC": "Halaman yang Anda cari mungkin telah dihapus, diubah namanya, atau tidak pernah ada.",
   "NOT_FOUND.BTN": "Kembali ke Beranda"

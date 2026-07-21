@@ -1,6 +1,6 @@
-# WebBio — Micro-Catalog & Link-in-Bio Platform
+# WebBio — Advanced Link-in-Bio Platform
 
-A full-stack platform for creating personal bio pages with links, products, and analytics — all in one place.
+A full-stack platform for creating personal bio pages with links, customizable themes, and analytics — all in one place.
 
 ## 🏗️ Project Structure
 
@@ -15,7 +15,7 @@ webbio/
 ## ✨ Features
 
 - 🔗 Link-in-Bio pages with custom slugs
-- 🛍️ Micro-catalog for showcasing products
+- 🎨 Beautiful themes and appearance customization
 - 📊 Analytics dashboard
 - 🔐 JWT-based authentication (access + refresh tokens)
 - ⚡ Edge-first backend on Cloudflare Workers
@@ -98,7 +98,7 @@ Before deploying, update `workers/wrangler.toml` with your actual values:
 
 ```bash
 cd workers
-wrangler deploy --env production
+wrangler deploy
 ```
 
 ### Deploy Frontend

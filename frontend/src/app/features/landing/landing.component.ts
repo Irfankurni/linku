@@ -93,7 +93,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
             </div>
             
             <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors">
-              <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-2xl flex items-center justify-center text-2xl mb-6">🛍️</div>
+              <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-2xl flex items-center justify-center text-2xl mb-6">🎨</div>
               <h3 class="text-xl font-semibold mb-3">{{ 'LANDING.FEATURES.ITEM2.TITLE' | translate }}</h3>
               <p class="text-slate-400 leading-relaxed">{{ 'LANDING.FEATURES.ITEM2.DESC' | translate }}</p>
             </div>
