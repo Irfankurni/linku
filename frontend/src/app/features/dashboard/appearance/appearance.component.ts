@@ -4,14 +4,13 @@ import { UserService } from '../../../core/services/user.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { BtnComponent } from '../../../shared/components/btn/btn.component';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
-import { UpperCasePipe } from '@angular/common';
 
-import { THEMES, type Theme } from '../../../core/constants/themes';
+import { THEMES } from '../../../core/constants/themes';
 
 @Component({
   selector: 'app-appearance',
   standalone: true,
-  imports: [ReactiveFormsModule, BtnComponent, TranslatePipe, UpperCasePipe],
+  imports: [ReactiveFormsModule, BtnComponent, TranslatePipe],
   template: `
     <div class="max-w-2xl space-y-6">
       <div>
@@ -54,53 +53,17 @@ import { THEMES, type Theme } from '../../../core/constants/themes';
         }
       </div>
 
-      <!-- Profile info -->
+      <!-- Background -->
       <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-4">
-        <h2 class="text-base font-semibold text-white">{{ 'DASHBOARD.APPEARANCE.PROFILE_SECTION' | translate }}</h2>
-        
-        <!-- Avatar Upload -->
-        <div class="flex items-center gap-4 pb-2">
-          <div class="relative w-16 h-16 rounded-full bg-white/10 flex items-center justify-center overflow-hidden border border-white/20">
-            @if (avatarUrl()) {
-              <img [src]="avatarUrl()" class="w-full h-full object-cover" />
-            } @else {
-              <span class="text-xl text-white font-semibold">{{ (form.value.display_name?.charAt(0) || 'U') | uppercase }}</span>
-            }
-            @if (avatarUploading()) {
-              <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <div class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-              </div>
-            }
-          </div>
-          <div>
-            <input type="file" #avatarInput class="hidden" accept="image/*" (change)="onAvatarUpload($event)" />
-            <button type="button" (click)="avatarInput.click()" [disabled]="avatarUploading()"
-              class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-medium rounded-lg transition disabled:opacity-50">
-              Change Avatar
-            </button>
-          </div>
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-semibold text-white">Background</h2>
+          @if (isFreePlan()) {
+            <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">PRO</span>
+          }
         </div>
-
         <form [formGroup]="form" (ngSubmit)="onSave()" class="space-y-3">
           <div class="space-y-1.5">
-            <label class="text-xs text-slate-400">{{ 'DASHBOARD.APPEARANCE.DISPLAY_NAME' | translate }}</label>
-            <input formControlName="display_name" type="text"
-              class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
-                     focus:outline-none focus:ring-2 focus:ring-violet-500 transition" />
-          </div>
-          <div class="space-y-1.5">
-            <label class="text-xs text-slate-400">{{ 'DASHBOARD.APPEARANCE.BIO' | translate }}</label>
-            <textarea formControlName="bio" rows="3"
-              class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
-                     focus:outline-none focus:ring-2 focus:ring-violet-500 transition resize-none"></textarea>
-          </div>
-          <div class="space-y-1.5">
-            <div class="flex justify-between items-center">
-              <label class="text-xs text-slate-400">Custom Background URL</label>
-              @if (isFreePlan()) {
-                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">PRO</span>
-              }
-            </div>
+            <label class="text-xs text-slate-400">Custom Background URL</label>
             <div class="flex items-center gap-3">
               <input formControlName="background_url" type="url" placeholder="https://example.com/image.jpg"
                 class="flex-1 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm
@@ -131,14 +94,9 @@ export class AppearanceComponent implements OnInit {
   themes        = THEMES;
   selectedTheme = signal('default');
   saving        = signal(false);
-  
-  avatarUrl       = signal<string | null>(null);
-  avatarUploading = signal(false);
-  bgUploading     = signal(false);
+  bgUploading   = signal(false);
 
   form = this.fb.group({
-    display_name: [''],
-    bio:          [''],
     background_url: [{ value: '', disabled: false }],
   });
 
@@ -149,30 +107,19 @@ export class AppearanceComponent implements OnInit {
   ngOnInit() {
     const profile = this.userService.profile();
     if (profile) {
-      this.form.patchValue({
-        display_name: profile.display_name,
-        bio: profile.bio ?? '',
-        background_url: (profile.settings as any)?.background_url ?? ''
-      });
-      this.selectedTheme.set(profile.theme ?? 'default');
-      this.avatarUrl.set(profile.avatar_url ?? null);
-      if (this.isFreePlan()) {
-        this.form.get('background_url')?.disable();
-      }
+      this._patchForm(profile);
     } else {
-      this.userService.loadProfile().subscribe(res => {
-        const p = res.data;
-        this.form.patchValue({
-          display_name: p.display_name,
-          bio: p.bio ?? '',
-          background_url: (p.settings as any)?.background_url ?? ''
-        });
-        this.selectedTheme.set(p.theme ?? 'default');
-        this.avatarUrl.set(p.avatar_url ?? null);
-        if (this.isFreePlan()) {
-          this.form.get('background_url')?.disable();
-        }
-      });
+      this.userService.loadProfile().subscribe(res => this._patchForm(res.data));
+    }
+  }
+
+  private _patchForm(profile: any) {
+    this.form.patchValue({
+      background_url: (profile.settings as any)?.background_url ?? ''
+    });
+    this.selectedTheme.set(profile.theme ?? 'default');
+    if (this.isFreePlan()) {
+      this.form.get('background_url')?.disable();
     }
   }
 
@@ -188,32 +135,11 @@ export class AppearanceComponent implements OnInit {
     const isProTheme = selected?.isPro ?? false;
 
     this.userService.updateProfile({
-      display_name: val.display_name ?? undefined,
-      bio:          val.bio ?? undefined,
-      theme:        (this.isFreePlan() && isProTheme) ? undefined : this.selectedTheme(),
-      settings:     settings,
+      theme:    (this.isFreePlan() && isProTheme) ? undefined : this.selectedTheme(),
+      settings: settings,
     }).subscribe({
       next:  () => { this.toast.success('Tampilan diperbarui!'); this.saving.set(false); },
       error: () => this.saving.set(false),
-    });
-  }
-
-  onAvatarUpload(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) return;
-
-    this.avatarUploading.set(true);
-    this.userService.uploadImage(file).subscribe({
-      next: (res) => {
-        this.avatarUrl.set(res.data.url);
-        this.userService.updateProfile({ avatar_url: res.data.url }).subscribe();
-        this.avatarUploading.set(false);
-        this.toast.success('Avatar berhasil diperbarui!');
-      },
-      error: () => {
-        this.avatarUploading.set(false);
-        this.toast.error('Gagal mengupload avatar');
-      }
     });
   }
 
